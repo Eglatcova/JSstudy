@@ -4,10 +4,10 @@ let money = 1000,
   deposit = true,
   mission = 100000000000000000000000000000,
   period = 7,
-  budgetDay = 9999990;
+  budgetDay;
 
 
-budgetDay /= 30;
+budgetDay = money/30;
 
 console.log(typeof money);
 console.log(typeof income);
