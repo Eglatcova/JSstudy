@@ -4,14 +4,22 @@ let money = +prompt('Ваш месячный доход?'),
   income = 'teaching',
   addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую'),
   deposit = confirm('Есть ли у вас депозит в банке?'),
-  expenses1 = prompt('Введите обязательную статью расходов?'),
-  amount1 = +prompt('Во сколько это обойдется?'),
-  expenses2 = prompt('Введите обязательную статью расходов?'),
-  amount2 = +prompt('Во сколько это обойдется?'),
+  //expenses1 = prompt('Введите обязательную статью расходов?'),
+  //amount1 = +prompt('Во сколько это обойдется?'),
+  //expenses2 = prompt('Введите обязательную статью расходов?'),
+  //amount2 = +prompt('Во сколько это обойдется?'),
   mission = 100000000,
   getExpensesMonth = function  () {
-    return amount1 + amount2;
+    let sum = 0; 
+
+    for (let i = 0; i < 2; i++) {
+      sum += +prompt('Во сколько это обойдется?');
+    }
+
+    return sum;
   },
+  
+  expensesAmount = getExpensesMonth(),
   getAccumulatedMonth = function  () {
     return money - getExpensesMonth();
   },
