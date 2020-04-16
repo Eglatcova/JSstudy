@@ -42,7 +42,7 @@ let money,
         appData.income[itemIncome] = cashIncome;
       }
       addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'курсы,йога,кино');
-      appData.addExpenses = addExpenses.split(/,/).map(word => word[0].toUpperCase() + word.substring(1)).join(', ');
+      appData.addExpenses = addExpenses.split(/, */).map(word => word[0].toUpperCase() + word.substring(1)).join(', ');
       appData.deposit = confirm('Есть ли у вас депозит в банке?');
       for (let i = 0; i < 2; i++) {
         let expense, sum;
@@ -113,6 +113,7 @@ appData.asking();
 appData.getExpensesMonth();
 appData.getAccumulatedMonth();
 appData.getTargetMonth();
+appData.getInfoDeposit();
 
 
 
