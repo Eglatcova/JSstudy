@@ -19,7 +19,6 @@ books.append(book[2]);
 book[3].before(book[4]);
 bookTitle[4].textContent = 'Книга 3. this и Прототипы Объектов';
 ad.remove();
-bookUl6.append(newElem);
 newElem.textContent = 'Глава 8: За пределами ES6';
 
 bookLi2[1].after(bookLi2[3]);
