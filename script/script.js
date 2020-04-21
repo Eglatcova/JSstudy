@@ -62,7 +62,7 @@ let expensesItems = document.querySelectorAll('.expenses-items'),
       additionalExpensesValue.value = appData.addExpenses.join(', ');
       targetMonthValue.value = Math.ceil(appData.getTargetMonth());
       incomePeriodValue.value = appData.calcSaveMoney();
-      inputPeriodSelect.addEventListener('change',
+      inputPeriodSelect.addEventListener('input',
         function () {
           incomePeriodValue.value = appData.calcSaveMoney();
         });
@@ -173,6 +173,7 @@ let expensesItems = document.querySelectorAll('.expenses-items'),
 calculateButton.addEventListener('click',
   function () {
     if (inputSalaryAmount.value === '') {
+      alert('Введите месячный доход');
       return;
     }
     appData.start();
@@ -181,4 +182,4 @@ plusButton1.addEventListener('click', appData.addIncomeBlock);
 plusButton2.addEventListener('click', appData.addExpensesBlock);
 inputPeriodSelect.addEventListener('change', appData.rangePeriod);
 
-//console.log(numberPeriod);
+console.log(inputNames);
