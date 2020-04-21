@@ -22,6 +22,8 @@ const inputDepositAmount = document.querySelector('.deposit-amount');
 const inputDepositPercent = document.querySelector('.deposit-percent');
 const inputTargetAmount = document.querySelector('.target-amount');
 const inputPeriodSelect = document.querySelector('.period-select');
+const inputTextAll = document.querySelectorAll('[type="text"]');
+const inputTextLeft = document.querySelectorAll('.data [type="text"]');
 const isNumber = function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n) && n != 0;
   },
@@ -44,29 +46,56 @@ let expensesItems = document.querySelectorAll('.expenses-items'),
     percentDeposit: 0,
     moneyDeposit: 0,
     start: function () {
-      appData.budget = inputSalaryAmount.value;
-      appData.getIncome(); //дополнительный доход
-      appData.getAddIncome(); //возможный доход
-      appData.getExpenses(); //обязательные расходы
-      appData.getAddExpenses(); //возможные расходы
-      appData.getAccumulatedMonth();
-      appData.showResult();
+      this.budget = inputSalaryAmount.value;
+      this.getIncome(); //дополнительный доход
+      this.getAddIncome(); //возможный доход
+      this.getExpenses(); //обязательные расходы
+      this.getAddExpenses(); //возможные расходы
+      this.getAccumulatedMonth();
+      this.showResult();
       console.log(this);
       //appData.getTargetMonth();
       //appData.getInfoDeposit();
     },
     showResult: function () {
-      budgetMonthValue.value = +appData.burgetMonth;
-      budgetDayValue.value = Math.floor(appData.burgetDay);
-      expensesIncomeValue.value = +appData.expensesMonth;
-      additionalIncomeValue.value = appData.addIncome.join(', ');
-      additionalExpensesValue.value = appData.addExpenses.join(', ');
-      targetMonthValue.value = Math.ceil(appData.getTargetMonth());
-      incomePeriodValue.value = appData.calcSaveMoney();
+      budgetMonthValue.value = +this.burgetMonth;
+      budgetDayValue.value = Math.floor(this.burgetDay);
+      expensesIncomeValue.value = +this.expensesMonth;
+      additionalIncomeValue.value = this.addIncome.join(', ');
+      additionalExpensesValue.value = this.addExpenses.join(', ');
+      targetMonthValue.value = Math.ceil(this.getTargetMonth());
+      incomePeriodValue.value = this.calcSaveMoney();
       inputPeriodSelect.addEventListener('input',
         function () {
           incomePeriodValue.value = appData.calcSaveMoney();
         });
+    },
+    //рассчитать
+    calculate : function () {
+      if (inputSalaryAmount.value === '') {
+        alert('Введите месячный доход');
+        return;
+      }
+     
+      appData.start();
+      
+      //блокировка левых инпутов
+      inputTextLeft.forEach(function (item) {
+        item.disabled = true;
+      });
+      calculateButton.textContent = 'Сбросить';
+      calculateButton.removeEventListener('click', appData.calculate);
+      calculateButton.addEventListener('click', appData.reset);
+    },
+    //сбросить
+    reset: function () {
+      inputTextAll.forEach(function (item) {
+        item.value = '';
+        item.disabled = false;
+        calculateButton.textContent = 'Рассчитать';
+        calculateButton.removeEventListener('click', appData.reset);
+        calculateButton.addEventListener('click', appData.calculate);
+      });
     },
     rangePeriod: function (event) {
       let numberPeriod = document.querySelector('.period-amount');
@@ -130,60 +159,52 @@ let expensesItems = document.querySelectorAll('.expenses-items'),
       });
     },
     getAccumulatedMonth: function () {
-      appData.burgetMonth = appData.budget - appData.expensesMonth;
-      appData.burgetDay = appData.burgetMonth / 30;
-      return appData.burgetMonth, appData.burgetDay;
+      this.burgetMonth = this.budget - this.expensesMonth;
+      this.burgetDay = this.burgetMonth / 30;
+      return this.burgetMonth, this.burgetDay;
     },
     getTargetMonth: function () {
-      return inputTargetAmount.value / appData.burgetMonth;
+      return inputTargetAmount.value / this.burgetMonth;
     },
     getStatusIncome: function () {
-      if (appData.burgetDay >= 1200) {
+      if (this.burgetDay >= 1200) {
         return ('У вас высокий уровень дохода');
-      } else if (600 <= appData.burgetDay && appData.burgetDay < 1200) {
+      } else if (600 <= this.burgetDay && this.burgetDay < 1200) {
         return ('У вас средний уровень дохода');
-      } else if (0 <= appData.burgetDay && appData.burgetDay < 600) {
+      } else if (0 <= this.burgetDay && this.burgetDay < 600) {
         return ('К сожалению, у вас уровень дохода ниже среднего');
       } else {
         return ('Что то пошло не так');
       }
     },
     getStatusTargetMonth: function () {
-      if (appData.period >= 0) {
-        return ('Цель будет достигнута за:' + Math.ceil(appData.getTargetMonth()) + ' месяцев');
+      if (this.period >= 0) {
+        return ('Цель будет достигнута за:' + Math.ceil(this.getTargetMonth()) + ' месяцев');
       } else {
         return ('Цель не будет достигнута');
       }
     },
     getInfoDeposit: function () {
-      if (appData.deposit) {
+      if (this.deposit) {
         do {
-          appData.percentDeposit = prompt('Какой годовой процент', '7');
+          this.percentDeposit = prompt('Какой годовой процент', '7');
         }
-        while ((!isNumber(appData.percentDeposit)));
+        while ((!isNumber(this.percentDeposit)));
         do {
-          appData.moneyDeposit = prompt('Какая сумма заложена?', '400000');
+          this.moneyDeposit = prompt('Какая сумма заложена?', '400000');
         }
-        while ((!isNumber(appData.moneyDeposit)));
+        while ((!isNumber(this.moneyDeposit)));
       }
     },
     calcSaveMoney: function () {
-      return appData.burgetMonth * inputPeriodSelect.value;
+      return this.burgetMonth * inputPeriodSelect.value;
     }
   };
-calculateButton.addEventListener('click',
-  function () {
-    if (inputSalaryAmount.value === '') {
-      alert('Введите месячный доход');
-      return;
-    }
-    appData.start();
-  });
+calculateButton.addEventListener('click', appData.calculate);
 plusButton1.addEventListener('click', appData.addIncomeBlock);
 plusButton2.addEventListener('click', appData.addExpensesBlock);
-inputPeriodSelect.addEventListener('change', appData.rangePeriod);
-
-appData.start.apply(appData);
+inputPeriodSelect.addEventListener('input', appData.rangePeriod);
 
 
-console.log(inputNames);
+
+//console.log(inputTextLeft);
