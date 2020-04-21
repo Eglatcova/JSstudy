@@ -51,6 +51,7 @@ let expensesItems = document.querySelectorAll('.expenses-items'),
       appData.getAddExpenses(); //возможные расходы
       appData.getAccumulatedMonth();
       appData.showResult();
+      console.log(this);
       //appData.getTargetMonth();
       //appData.getInfoDeposit();
     },
@@ -181,5 +182,8 @@ calculateButton.addEventListener('click',
 plusButton1.addEventListener('click', appData.addIncomeBlock);
 plusButton2.addEventListener('click', appData.addExpensesBlock);
 inputPeriodSelect.addEventListener('change', appData.rangePeriod);
+
+appData.start.apply(appData);
+
 
 console.log(inputNames);
