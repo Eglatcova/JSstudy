@@ -91,6 +91,8 @@ let expensesItems = document.querySelectorAll('.expenses-items'),
       calculateButton.addEventListener('click', appData.reset);
       plusButton1.disabled = true; 
       plusButton2.disabled = true; 
+      plusButton1.style.display = "block";
+      plusButton2.style.display = "block";
     },
     //сбросить
     reset: function () {
