@@ -107,8 +107,92 @@ const cityArr = {
   rus: ['Москва', 'Санк-Петербург', 'Новосибирск', 'Екатеринбург', 'Нижний Новгород', 'Казань', 'Челябинск'],
   uk: ['Киев', 'Харьков', 'Одесса', 'Днепр', 'Донецк', 'Запорожье', 'Львов'],
   bel: ['Минск', 'Гомель', 'Могилёв', 'Витебск', 'Гродно', 'Брест'],
-  jap: ['Токио', 'Киото', 'Осака', 'Иокогама'] 
+  jap: ['Токио', 'Киото', 'Осака', 'Иокогама']
 };
-const country = document.querySelector('#country');
 
-console.log(country.value);
+
+const country = document.querySelector('#country');
+const city = document.querySelector('#city');
+const result = document.querySelector('.result');
+const res1 = document.createElement('span');
+const res2 = document.createElement('span');
+const optionCountry = document.querySelectorAll('option');
+
+
+
+
+let resCountry = () => {
+
+
+
+  city.style.display = 'inline-block';
+
+  switch (country.value) {
+    case 'rus':
+      city.textContent = '';
+      
+      cityArr.rus.forEach((item) => {
+        const option = document.createElement('option');
+        option.innerHTML = item;
+        city.append(option);
+      });
+    
+      break;
+    case 'uk':
+      city.textContent = '';
+      cityArr.uk.forEach((item) => {
+        const option = document.createElement('option');
+        option.innerHTML = item;
+        city.append(option);
+      });
+      break;
+    case 'bel':
+      city.textContent = '';
+      cityArr.bel.forEach((item) => {
+        const option = document.createElement('option');
+        option.innerHTML = item;
+        city.append(option);
+      });
+      break;
+    case 'jap':
+      city.textContent = '';
+      cityArr.jap.forEach((item) => {
+        const option = document.createElement('option');
+
+        option.innerHTML = item;
+        city.append(option);
+      });
+      break;
+  }
+
+  result.innerHTML = '';
+  res1.innerHTML = country.value;
+  result.append(res1);
+
+};
+
+
+let resCity = () => {
+  
+  
+
+  result.innerHTML = '';
+  res1.innerHTML = country.value;
+  result.append(res1);
+
+  res2.innerHTML = city.value;
+  result.append(res2);
+
+  
+  console.log(country.value.textContent);
+
+
+}
+
+country.addEventListener('change', resCountry);
+city.addEventListener('change', resCity);
+
+
+
+console.log(optionCountry[1].textContent);
+console.log(country.checked.textContent);
