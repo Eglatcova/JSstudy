@@ -97,7 +97,7 @@ function getResult(x, y) {
   return result;
 }
 
-console.log('Бонус задание №2', getResult(4, 8));
+console.log('Бонус задание №2:', getResult(4, 8));
 
 ////////////////////
 
@@ -117,13 +117,12 @@ const result = document.querySelector('.result');
 const res1 = document.createElement('span');
 const res2 = document.createElement('span');
 const optionCountry = document.querySelectorAll('option');
+let countryValue;
 
 
 
 
 let resCountry = () => {
-
-
 
   city.style.display = 'inline-block';
 
@@ -135,56 +134,51 @@ let resCountry = () => {
         const option = document.createElement('option');
         option.innerHTML = item;
         city.append(option);
+        countryValue = 'Россия';
       });
-    
       break;
+
     case 'uk':
       city.textContent = '';
       cityArr.uk.forEach((item) => {
         const option = document.createElement('option');
         option.innerHTML = item;
         city.append(option);
+        countryValue = 'Украина';
       });
       break;
+
     case 'bel':
       city.textContent = '';
       cityArr.bel.forEach((item) => {
         const option = document.createElement('option');
         option.innerHTML = item;
         city.append(option);
+        countryValue = 'Беларусь';
       });
       break;
+
     case 'jap':
       city.textContent = '';
       cityArr.jap.forEach((item) => {
         const option = document.createElement('option');
-
         option.innerHTML = item;
         city.append(option);
+        countryValue = 'Япония';
       });
       break;
   }
-
-  result.innerHTML = '';
-  res1.innerHTML = country.value;
-  result.append(res1);
-
 };
 
 
 let resCity = () => {
   
-  
-
   result.innerHTML = '';
-  res1.innerHTML = country.value;
+  res1.innerHTML = countryValue;
   result.append(res1);
 
-  res2.innerHTML = city.value;
+  res2.innerHTML =', ' + city.value;
   result.append(res2);
-
-  
-  console.log(country.value.textContent);
 
 
 }
@@ -194,5 +188,5 @@ city.addEventListener('change', resCity);
 
 
 
-console.log(optionCountry[1].textContent);
-console.log(country.checked.textContent);
+//console.log(optionCountry[1].textContent);
+//console.log(country.textContent);
