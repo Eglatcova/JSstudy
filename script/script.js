@@ -1,192 +1,56 @@
-'use srtict';
+"use strict";
+window.addEventListener('DOMContentLoaded', () => {
 
-//1 задание
-const myLesson = [{
-    lesson: 1,
-    status: true
-  },
-  {
-    lesson: 2,
-    status: true
-  },
-  {
-    lesson: 3,
-    status: false
-  },
-  {
-    lesson: 4,
-    status: true
-  },
-  {
-    lesson: 5,
-    status: false
-  },
-  {
-    lesson: 6,
-    status: true
-  },
-  {
-    lesson: 7,
-    status: true
-  },
-  {
-    lesson: 8,
-    status: true
-  },
-  {
-    lesson: 9,
-    status: true
-  },
-  {
-    lesson: 10,
-    status: false
-  }
-];
+    // Timer
+    function countTimer(deadline) {
 
-const falseLesson = myLesson.filter(item => item.status === false);
-
-console.log('Обязательное задание', falseLesson);
+        const timerDays = document.querySelector('#timer-days'),
+            timerHours = document.querySelector('#timer-hours'),
+            timerMinutes = document.querySelector('#timer-minutes'),
+            timerSeconds = document.querySelector('#timer-seconds');
+        let idTimeout = 0;
 
 
-////////////////////
+        function getTimeRemaining() {
 
-const a = document.querySelector('#a'),
-  b = document.querySelector('#b'),
-  sumBtn = document.querySelector('#sum'),
-  multBtn = document.querySelector('#mult'),
-  resEl = document.querySelector('#res');
+            const dateStop = new Date(deadline).getTime(),
+                dateNow = new Date().getTime(),
+                timeRemaining = (dateStop - dateNow) / 1000,
+                seconds = Math.floor(timeRemaining % 60),
+                minutes = Math.floor((timeRemaining / 60) % 60),
+                hours = Math.floor((timeRemaining / 60 / 60) % 24),
+                days = Math.floor(timeRemaining / 60 / 60 / 24);
 
-let calculator = {
+            return {
+                timeRemaining,
+                days,
+                hours,
+                minutes,
+                seconds
+            };
+        }
 
-  sumRes: 0,
-  mulRes: 0,
+        function updateClock() {
 
-  sum() {
-    this.sumRes = +a.value + +b.value;
-  },
+            const timer = getTimeRemaining();
 
-  mult() {
-    this.mulRes = +a.value * +b.value;
-  },
+            timerSeconds.textContent = String(timer.seconds).padStart(2, '0');
+            timerMinutes.textContent = String(timer.minutes).padStart(2, '0');
+            timerHours.textContent = String(timer.hours).padStart(2, '0');
+            timerDays.textContent = String(timer.days).padStart(2, '0');
 
-  show() {
-    if (sumBtn === event.target) {
-      this.sum();
-      resEl.value = this.sumRes;
+            if (timer.timeRemaining < 0) {
+                clearTimeout(idTimeout);
+                timerSeconds.textContent = '00';
+                timerMinutes.textContent = '00';
+                timerHours.textContent = '00';
+                timerDays.textContent = '00';
+            }
+        }
+
+        idTimeout = setInterval(updateClock, 1000);
     }
-    if (multBtn === event.target) {
-      this.mult();
-      resEl.value = this.mulRes;
-    }
-  }
-};
 
-
-sumBtn.addEventListener('click', calculator.show.bind(calculator));
-multBtn.addEventListener('click', calculator.show.bind(calculator));
-
-///////////////////////
-
-function getResult(x, y) {
-  let result;
-
-  result = Math.pow(x, y);
-  result = result.toString().split('');
-  result = result.reduce((accumulator, item) => +accumulator + +item, 0);
-
-  return result;
-}
-
-console.log('Бонус задание №2:', getResult(4, 8));
-
-////////////////////
-
-
-
-const cityArr = {
-  rus: ['Москва', 'Санк-Петербург', 'Новосибирск', 'Екатеринбург', 'Нижний Новгород', 'Казань', 'Челябинск'],
-  uk: ['Киев', 'Харьков', 'Одесса', 'Днепр', 'Донецк', 'Запорожье', 'Львов'],
-  bel: ['Минск', 'Гомель', 'Могилёв', 'Витебск', 'Гродно', 'Брест'],
-  jap: ['Токио', 'Киото', 'Осака', 'Иокогама']
-};
-
-
-const country = document.querySelector('#country');
-const city = document.querySelector('#city');
-const result = document.querySelector('.result');
-const res1 = document.createElement('span');
-const res2 = document.createElement('span');
-const optionCountry = document.querySelectorAll('option');
-let countryValue;
-
-
-
-
-let resCountry = () => {
-
-  city.style.display = 'inline-block';
-
-  switch (country.value) {
-    case 'rus':
-      city.textContent = '';
-      
-      cityArr.rus.forEach((item) => {
-        const option = document.createElement('option');
-        option.innerHTML = item;
-        city.append(option);
-        countryValue = 'Россия';
-      });
-      break;
-
-    case 'uk':
-      city.textContent = '';
-      cityArr.uk.forEach((item) => {
-        const option = document.createElement('option');
-        option.innerHTML = item;
-        city.append(option);
-        countryValue = 'Украина';
-      });
-      break;
-
-    case 'bel':
-      city.textContent = '';
-      cityArr.bel.forEach((item) => {
-        const option = document.createElement('option');
-        option.innerHTML = item;
-        city.append(option);
-        countryValue = 'Беларусь';
-      });
-      break;
-
-    case 'jap':
-      city.textContent = '';
-      cityArr.jap.forEach((item) => {
-        const option = document.createElement('option');
-        option.innerHTML = item;
-        city.append(option);
-        countryValue = 'Япония';
-      });
-      break;
-  }
-};
-
-
-let resCity = () => {
-  
-  result.innerHTML = '';
-  res1.innerHTML = countryValue;
-  result.append(res1);
-
-  res2.innerHTML =', ' + city.value;
-  result.append(res2);
-
-
-}
-
-country.addEventListener('change', resCountry);
-city.addEventListener('change', resCity);
-
-
-
-//console.log(optionCountry[1].textContent);
-//console.log(country.textContent);
+    countTimer('9 may 2020');
+    
+});
