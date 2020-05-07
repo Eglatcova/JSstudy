@@ -3,13 +3,16 @@
 window.addEventListener('DOMContentLoaded', () => {
 
   const hiDay = document.querySelector('.hi-day'),
-      weekday = document.querySelector('.weekday'),
-      nowTime = document.querySelector('.now-time'),
-      date = document.querySelector('.date');
+    weekday = document.querySelector('.weekday'),
+    nowTime = document.querySelector('.now-time'),
+    date = document.querySelector('.date');
 
-  let newDate = new Date();
+    
+  let newDate = new Date(),
+    yearDay = new Date('31 december 2020').getTime(),
+    newYearStay = Math.floor((yearDay - newDate.getTime()) / 1000 / 60 / 60 / 24);
 
-  function nowWeek (){
+  function nowWeek() {
     const weekRu = [
         'Воскресенье',
         'Понедельник',
@@ -23,15 +26,21 @@ window.addEventListener('DOMContentLoaded', () => {
     return weekRu[weekDay];
   }
 
+  function nowHi() {
+    if (newDate.getHours() > 0 && newDate.getHours() < 7) {
+      hiDay.textContent = 'Доброй ночи';
+    } else if (newDate.getHours() > 6 && newDate.getHours() < 12) {
+      hiDay.textContent = 'Доброе утро';
+    } else if (newDate.getHours() > 11 && newDate.getHours() < 20) {
+      hiDay.textContent = 'Добрый день';
+    } else {
+      hiDay.textContent = 'Добрый вечер';
+    }
+  }
 
-
-
-  weekday.textContent = nowWeek();
-  nowTime.textContent = newDate.toLocaleTimeString('en');
-
-  console.log(newDate.getTime());
-  console.log(newDate.getTime('31 december 2020'));
-
-
-
+  weekday.textContent = 'Сегодня: ' + nowWeek();
+  nowTime.textContent = 'Текущее время: ' + newDate.toLocaleTimeString('en');
+  date.textContent = 'До нового года осталось: ' + newYearStay;
+  nowHi();
+  
 });
