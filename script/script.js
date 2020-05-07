@@ -1,56 +1,37 @@
 "use strict";
+
 window.addEventListener('DOMContentLoaded', () => {
 
-    // Timer
-    function countTimer(deadline) {
+  const hiDay = document.querySelector('.hi-day'),
+      weekday = document.querySelector('.weekday'),
+      nowTime = document.querySelector('.now-time'),
+      date = document.querySelector('.date');
 
-        const timerDays = document.querySelector('#timer-days'),
-            timerHours = document.querySelector('#timer-hours'),
-            timerMinutes = document.querySelector('#timer-minutes'),
-            timerSeconds = document.querySelector('#timer-seconds');
-        let idTimeout = 0;
+  let newDate = new Date();
+
+  function nowWeek (){
+    const weekRu = [
+        'Воскресенье',
+        'Понедельник',
+        'Вторник',
+        'Среда',
+        'Четверг',
+        'Пятница',
+        'Суббота'
+      ],
+      weekDay = newDate.getDay();
+    return weekRu[weekDay];
+  }
 
 
-        function getTimeRemaining() {
 
-            const dateStop = new Date(deadline).getTime(),
-                dateNow = new Date().getTime(),
-                timeRemaining = (dateStop - dateNow) / 1000,
-                seconds = Math.floor(timeRemaining % 60),
-                minutes = Math.floor((timeRemaining / 60) % 60),
-                hours = Math.floor((timeRemaining / 60 / 60) % 24),
-                days = Math.floor(timeRemaining / 60 / 60 / 24);
 
-            return {
-                timeRemaining,
-                days,
-                hours,
-                minutes,
-                seconds
-            };
-        }
+  weekday.textContent = nowWeek();
+  nowTime.textContent = newDate.toLocaleTimeString('en');
 
-        function updateClock() {
+  console.log(newDate.getTime());
+  console.log(newDate.getTime('31 december 2020'));
 
-            const timer = getTimeRemaining();
 
-            timerSeconds.textContent = String(timer.seconds).padStart(2, '0');
-            timerMinutes.textContent = String(timer.minutes).padStart(2, '0');
-            timerHours.textContent = String(timer.hours).padStart(2, '0');
-            timerDays.textContent = String(timer.days).padStart(2, '0');
 
-            if (timer.timeRemaining < 0) {
-                clearTimeout(idTimeout);
-                timerSeconds.textContent = '00';
-                timerMinutes.textContent = '00';
-                timerHours.textContent = '00';
-                timerDays.textContent = '00';
-            }
-        }
-
-        idTimeout = setInterval(updateClock, 1000);
-    }
-
-    countTimer('9 may 2020');
-    
 });
