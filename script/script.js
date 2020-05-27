@@ -239,9 +239,55 @@ window.addEventListener("DOMContentLoaded", () => {
     startSlide(3000);
   };
 
+  //переключение картинок
+
+  const toggleImg = () => {
+    const photos = document.querySelectorAll(".command__photo");
+    let firstPhotos = [],
+      currentIndex = 0;
+    //пушить первоначальные ссылки в массив
+    photos.forEach((elem) => {
+      firstPhotos.push(elem.src);
+    });
+
+    photos.forEach((elem) => {
+      //дать каждой фотаграфии свой индекс
+      elem.value = currentIndex++;
+      elem.addEventListener("mouseenter", () => {
+        event.target.src = event.target.dataset.img;
+      });
+
+      elem.addEventListener("mouseleave", (index) => {
+        event.target.src = firstPhotos[elem.value];
+      });
+    });
+  };
+
+  //валидация, цифры
+
+  const inputValidation = () => {
+    const inputSquare = document.querySelector(".calc-square"),
+      inputCount = document.querySelector(".calc-count"),
+      inputDay = document.querySelector(".calc-day");
+
+    inputSquare.addEventListener("input", () => {
+      inputSquare.value = inputSquare.value.replace(/\D/g, "");
+    });
+
+    inputCount.addEventListener("input", () => {
+      inputCount.value = inputCount.value.replace(/\D/g, "");
+    });
+
+    inputDay.addEventListener("input", () => {
+      inputDay.value = inputDay.value.replace(/\D/g, "");
+    });
+  };
+
   countTimer("29 may 2020");
   toggleMenu();
   togglePopUp();
   tabs();
   slider();
+  toggleImg();
+  inputValidation();
 });
