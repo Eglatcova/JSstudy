@@ -331,10 +331,6 @@ window.addEventListener("DOMContentLoaded", () => {
     calcBlock.addEventListener("change", (event) => {
       const target = event.target;
       if (
-        /*         target.matches(".calc-type") ||
-        target.matches(".calc-.calc-square") ||
-        target.matches(".calc-day") ||
-        target.matches(".calc-count") */
         target === calcType ||
         target === calcSquare ||
         target === calcDay ||
@@ -347,7 +343,217 @@ window.addEventListener("DOMContentLoaded", () => {
     // console.log(totalValue);
   };
 
-  countTimer("29 may 2020");
+  // send-ajax-form1
+  const sendForm1 = () => {
+    const errorMessage = "Что то пошло не так",
+      loadMessage = "Загрузка...",
+      successMessage = "Спасибо! Мы скоро с вами свяжемся!";
+    const form = document.querySelector("#form1"),
+      inputs = form.querySelectorAll("input"),
+      formName = document.querySelector("#form1-name"),
+      formPhone = document.querySelector("#form1-phone");
+
+    const statusMessage = document.createElement("div");
+    statusMessage.style.cssText = "font-size: 2rem";
+    //валидация
+    formPhone.addEventListener("input", () => {
+      formPhone.value = formPhone.value.match(/[\d\+]+/, "");
+    });
+    formName.addEventListener("input", () => {
+      formName.value = formName.value.match(/[а-яёА-ЯЁ  ]+/u, "");
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      form.append(statusMessage);
+      statusMessage.textContent = loadMessage;
+      const formData = new FormData(form);
+      //объект для внесения в него данных формы
+      let body = {};
+      //запись данных формы в объект body
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+      postData(
+        body,
+        () => {
+          statusMessage.textContent = successMessage;
+          inputs.forEach((elem) => {
+            elem.value = "";
+          });
+        },
+        () => {
+          statusMessage.textContent = errorMessage;
+        }
+      );
+    });
+
+    const postData = (body, outputData, errorData) => {
+      const request = new XMLHttpRequest();
+      //важно вешать прослушку сразу после создания request
+      request.addEventListener("readystatechange", () => {
+        if (request.readyState !== 4) {
+          return;
+        }
+
+        if (request.status === 200) {
+          outputData();
+        } else {
+          errorData(request.status);
+        }
+      });
+
+      request.open("POST", "./server.php");
+      request.setRequestHeader("Content-Type", "application/json");
+
+      //отправка данных в JSON формате
+      request.send(JSON.stringify(body));
+    };
+  };
+
+  // send-ajax-form2
+  const sendForm2 = () => {
+    const errorMessage = "Что то пошло не так",
+      loadMessage = "Загрузка...",
+      successMessage = "Спасибо! Мы скоро с вами свяжемся!";
+    const form = document.querySelector("#form2"),
+      inputs = form.querySelectorAll("input"),
+      formName = document.querySelector("#form2-name"),
+      formPhone = document.querySelector("#form2-phone"),
+      formMessage = document.querySelector("#form2-message");
+
+    const statusMessage = document.createElement("div");
+    statusMessage.style.cssText = "font-size: 2rem";
+
+    //валидация
+    formPhone.addEventListener("input", () => {
+      formPhone.value = formPhone.value.match(/[\d\+]+/, "");
+    });
+    formName.addEventListener("input", () => {
+      formName.value = formName.value.match(/[а-яёА-ЯЁ  ]+/u, "");
+    });
+    formMessage.addEventListener("input", () => {
+      formMessage.value = formMessage.value.match(/[а-яёА-ЯЁ  ]+/u, "");
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      form.append(statusMessage);
+      statusMessage.textContent = loadMessage;
+      const formData = new FormData(form);
+      //объект для внесения в него данных формы
+      let body = {};
+      //запись данных формы в объект body
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+      postData(
+        body,
+        () => {
+          statusMessage.textContent = successMessage;
+          inputs.forEach((elem) => {
+            elem.value = "";
+          });
+        },
+        () => {
+          statusMessage.textContent = errorMessage;
+        }
+      );
+    });
+
+    const postData = (body, outputData, errorData) => {
+      const request = new XMLHttpRequest();
+      //важно вешать прослушку сразу после создания request
+      request.addEventListener("readystatechange", () => {
+        if (request.readyState !== 4) {
+          return;
+        }
+
+        if (request.status === 200) {
+          outputData();
+        } else {
+          errorData(request.status);
+        }
+      });
+
+      request.open("POST", "./server.php");
+      request.setRequestHeader("Content-Type", "application/json");
+
+      //отправка данных в JSON формате
+      request.send(JSON.stringify(body));
+    };
+  };
+
+  // send-ajax-form3
+  const sendForm3 = () => {
+    const errorMessage = "Что то пошло не так",
+      loadMessage = "Загрузка...",
+      successMessage = "Спасибо! Мы скоро с вами свяжемся!";
+    const form = document.querySelector("#form3"),
+      inputs = form.querySelectorAll("input"),
+      formName = document.querySelector("#form3-name"),
+      formPhone = document.querySelector("#form3-phone");
+
+    const statusMessage = document.createElement("div");
+    statusMessage.style = "color: white; font-size: 2rem";
+
+    //валидация
+    formPhone.addEventListener("input", () => {
+      formPhone.value = formPhone.value.match(/[\d\+]+/, "");
+    });
+    formName.addEventListener("input", () => {
+      formName.value = formName.value.match(/[а-яёА-ЯЁ  ]+/u, "");
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      form.append(statusMessage);
+      statusMessage.textContent = loadMessage;
+      const formData = new FormData(form);
+      //объект для внесения в него данных формы
+      let body = {};
+      //запись данных формы в объект body
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+      postData(
+        body,
+        () => {
+          statusMessage.textContent = successMessage;
+          inputs.forEach((elem) => {
+            elem.value = "";
+          });
+        },
+        () => {
+          statusMessage.textContent = errorMessage;
+        }
+      );
+    });
+
+    const postData = (body, outputData, errorData) => {
+      const request = new XMLHttpRequest();
+      //важно вешать прослушку сразу после создания request
+      request.addEventListener("readystatechange", () => {
+        if (request.readyState !== 4) {
+          return;
+        }
+
+        if (request.status === 200) {
+          outputData();
+        } else {
+          errorData(request.status);
+        }
+      });
+
+      request.open("POST", "./server.php");
+      request.setRequestHeader("Content-Type", "application/json");
+
+      //отправка данных в JSON формате
+      request.send(JSON.stringify(body));
+    };
+  };
+
+  countTimer("29 june 2020");
   toggleMenu();
   togglePopUp();
   tabs();
@@ -355,4 +561,7 @@ window.addEventListener("DOMContentLoaded", () => {
   toggleImg();
   inputValidation();
   calc();
+  sendForm1();
+  sendForm2();
+  sendForm3();
 });
