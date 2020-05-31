@@ -374,41 +374,41 @@ window.addEventListener("DOMContentLoaded", () => {
       formData.forEach((val, key) => {
         body[key] = val;
       });
-      postData(
-        body,
-        () => {
+
+      const postData = (body) => {
+        return new Promise((resolve, reject) => {
+          const request = new XMLHttpRequest();
+          //важно вешать прослушку сразу после создания request
+          request.addEventListener("readystatechange", () => {
+            if (request.readyState !== 4) {
+              return;
+            }
+            if (request.status === 200) {
+              resolve();
+            } else {
+              reject(request.status);
+            }
+          });
+
+          request.open("POST", "./server.php");
+          request.setRequestHeader("Content-Type", "application/json");
+
+          //отправка данных в JSON формате
+          request.send(JSON.stringify(body));
+        });
+      };
+
+      postData(body)
+        .then(() => {
           statusMessage.textContent = successMessage;
           inputs.forEach((elem) => {
             elem.value = "";
           });
-        },
-        () => {
+        })
+        .catch(() => {
           statusMessage.textContent = errorMessage;
-        }
-      );
+        });
     });
-
-    const postData = (body, outputData, errorData) => {
-      const request = new XMLHttpRequest();
-      //важно вешать прослушку сразу после создания request
-      request.addEventListener("readystatechange", () => {
-        if (request.readyState !== 4) {
-          return;
-        }
-
-        if (request.status === 200) {
-          outputData();
-        } else {
-          errorData(request.status);
-        }
-      });
-
-      request.open("POST", "./server.php");
-      request.setRequestHeader("Content-Type", "application/json");
-
-      //отправка данных в JSON формате
-      request.send(JSON.stringify(body));
-    };
   };
 
   // send-ajax-form2
@@ -447,41 +447,41 @@ window.addEventListener("DOMContentLoaded", () => {
       formData.forEach((val, key) => {
         body[key] = val;
       });
-      postData(
-        body,
-        () => {
+
+      const postData = (body) => {
+        return new Promise((resolve, reject) => {
+          const request = new XMLHttpRequest();
+          //важно вешать прослушку сразу после создания request
+          request.addEventListener("readystatechange", () => {
+            if (request.readyState !== 4) {
+              return;
+            }
+            if (request.status === 200) {
+              resolve();
+            } else {
+              reject(request.status);
+            }
+          });
+
+          request.open("POST", "./server.php");
+          request.setRequestHeader("Content-Type", "application/json");
+
+          //отправка данных в JSON формате
+          request.send(JSON.stringify(body));
+        });
+      };
+
+      postData(body)
+        .then(() => {
           statusMessage.textContent = successMessage;
           inputs.forEach((elem) => {
             elem.value = "";
           });
-        },
-        () => {
+        })
+        .catch(() => {
           statusMessage.textContent = errorMessage;
-        }
-      );
+        });
     });
-
-    const postData = (body, outputData, errorData) => {
-      const request = new XMLHttpRequest();
-      //важно вешать прослушку сразу после создания request
-      request.addEventListener("readystatechange", () => {
-        if (request.readyState !== 4) {
-          return;
-        }
-
-        if (request.status === 200) {
-          outputData();
-        } else {
-          errorData(request.status);
-        }
-      });
-
-      request.open("POST", "./server.php");
-      request.setRequestHeader("Content-Type", "application/json");
-
-      //отправка данных в JSON формате
-      request.send(JSON.stringify(body));
-    };
   };
 
   // send-ajax-form3
@@ -516,41 +516,41 @@ window.addEventListener("DOMContentLoaded", () => {
       formData.forEach((val, key) => {
         body[key] = val;
       });
-      postData(
-        body,
-        () => {
+
+      const postData = (body) => {
+        return new Promise((resolve, reject) => {
+          const request = new XMLHttpRequest();
+          //важно вешать прослушку сразу после создания request
+          request.addEventListener("readystatechange", () => {
+            if (request.readyState !== 4) {
+              return;
+            }
+            if (request.status === 200) {
+              resolve();
+            } else {
+              reject(request.status);
+            }
+          });
+
+          request.open("POST", "./server.php");
+          request.setRequestHeader("Content-Type", "application/json");
+
+          //отправка данных в JSON формате
+          request.send(JSON.stringify(body));
+        });
+      };
+
+      postData(body)
+        .then(() => {
           statusMessage.textContent = successMessage;
           inputs.forEach((elem) => {
             elem.value = "";
           });
-        },
-        () => {
+        })
+        .catch(() => {
           statusMessage.textContent = errorMessage;
-        }
-      );
+        });
     });
-
-    const postData = (body, outputData, errorData) => {
-      const request = new XMLHttpRequest();
-      //важно вешать прослушку сразу после создания request
-      request.addEventListener("readystatechange", () => {
-        if (request.readyState !== 4) {
-          return;
-        }
-
-        if (request.status === 200) {
-          outputData();
-        } else {
-          errorData(request.status);
-        }
-      });
-
-      request.open("POST", "./server.php");
-      request.setRequestHeader("Content-Type", "application/json");
-
-      //отправка данных в JSON формате
-      request.send(JSON.stringify(body));
-    };
   };
 
   countTimer("29 june 2020");
