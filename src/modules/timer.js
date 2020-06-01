@@ -35,6 +35,7 @@
        timerDays.textContent = "00";
      }
    }
+   updateClock();
    idTimeout = setInterval(updateClock, 1000);
  };
 

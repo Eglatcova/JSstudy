@@ -20,7 +20,7 @@ const sendForm2 = () => {
     formName.value = formName.value.match(/[а-яёА-ЯЁ  ]+/u, "");
   });
   formMessage.addEventListener("input", () => {
-    formMessage.value = formMessage.value.match(/[а-яёА-ЯЁ  ]+/u, "");
+    formMessage.value = formMessage.value.match(/[а-яёА-ЯЁ,.!?;:()"'  ]+/u, "");
   });
 
   form.addEventListener("submit", (event) => {
